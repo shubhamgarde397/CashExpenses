@@ -1,0 +1,40 @@
+<router-outlet>
+  <div class="table-wrapper-scroll-y well">
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Srno</th>
+          <th scope="col">Description</th>
+          <th scope="col">Deposit</th>
+          <th scope="col">Withdraw</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let i of cash_expenses;let j = index">
+          <th scope="row">{{j+1}}</th>
+          <td>{{i.Description}}</td>
+          <td>{{i.Deposit}}
+            <i class="material-icons" style="color:green">trending_up</i>
+          </td>
+          <td>{{i.Withdraw}}
+            <i class="material-icons" style="color:red">trending_up</i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="well">
+
+    <a routerLink="AddExpenses">
+      <i class="material-icons" style="background-color: green; color: white">add</i>
+    </a>
+
+
+    <a routerLink="RemoveExpenses">
+      <i class="material-icons" style="background-color: red; color: white">add</i>
+    </a>
+
+  </div>
+</router-outlet>

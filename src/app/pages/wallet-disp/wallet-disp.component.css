@@ -1,0 +1,12 @@
+.table-wrapper-scroll-y {
+  display: block;
+  max-height: 600px;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table-header{
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+}
