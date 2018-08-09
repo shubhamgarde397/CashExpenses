@@ -1,3 +1,22 @@
+<div class="well row">
+  <div class="col-sm-4 basic" routerLink="AddExpenses" style="background-color: green;color:white">
+    <h1>
+      <i class="material-icons " style="color: white ">add</i>
+      Add
+    </h1>
+  </div>
+  <div class="col-sm-4">
+    <h1>Wallet: {{WalletMoney}}</h1>
+  </div>
+  <div class="col-sm-4" routerLink="RemoveExpenses" style="background-color:red; color:white">
+    <h1>
+      <i class="material-icons " style="background-color: red; color: white ">remove</i>
+      Remove
+    </h1>
+  </div>
+</div>
+
+
 <router-outlet>
   <div class="table-wrapper-scroll-y well">
 
@@ -5,6 +24,7 @@
       <thead>
         <tr>
           <th scope="col">Srno</th>
+          <th scope="col">Date</th>
           <th scope="col">Description</th>
           <th scope="col">Deposit</th>
           <th scope="col">Withdraw</th>
@@ -14,6 +34,7 @@
 
         <tr *ngFor="let i of cash_expenses;let j = index">
           <th scope="row">{{j+1}}</th>
+          <td>{{i.Date}}</td>
           <td>{{i.Description}}</td>
           <td>{{i.Deposit}}
             <i class="material-icons" style="color:green">trending_up</i>
@@ -25,16 +46,5 @@
       </tbody>
     </table>
   </div>
-  <div class="well">
 
-    <a routerLink="AddExpenses">
-      <i class="material-icons" style="background-color: green; color: white">add</i>
-    </a>
-
-
-    <a routerLink="RemoveExpenses">
-      <i class="material-icons" style="background-color: red; color: white">add</i>
-    </a>
-
-  </div>
 </router-outlet>

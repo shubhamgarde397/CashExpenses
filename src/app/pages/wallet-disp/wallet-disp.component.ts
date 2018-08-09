@@ -14,6 +14,8 @@ export class WalletDispComponent implements OnInit {
   show = false;
   found;
   arr;
+  public Wallet: number;
+  public WalletMoney: number;
 
   constructor(private handleservice: HandledataService) { }
 
@@ -24,6 +26,16 @@ export class WalletDispComponent implements OnInit {
         this.cash_expenses = res.json();
       });
   };
+
+  fetchWallet = function () {
+    this.handleservice.getData('Wallet')
+      .subscribe((res: Response) => {
+
+        this.Wallet = res.json();
+        this.WalletMoney = this.Wallet[0].Money;
+
+      });
+  }
 
   deleteVillageDetails = function (id) {
     if (confirm('Are you sure?')) {
@@ -40,5 +52,7 @@ export class WalletDispComponent implements OnInit {
 
   ngOnInit() {
     this.fetchData();
+    this.fetchWallet();
+
   }
 }

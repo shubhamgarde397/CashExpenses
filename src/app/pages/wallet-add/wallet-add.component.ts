@@ -45,9 +45,11 @@ export class WalletAddComponent implements OnInit {
 
 
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
-    console.log(JSON.stringify(value));
+
     this.submitted = true;
     this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
+    this.handleservice.store(value, 'Wallet', 'add').subscribe(x => this.response = x);//old
+    this._location.back();
   }
   back() {
     this.submitted = !this.submitted;

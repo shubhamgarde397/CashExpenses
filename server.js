@@ -142,6 +142,16 @@ app.get('/getCashExpenses', function (req, res) {
         });
 });
 
+app.get('/Wallet', function (req, res) {
+    var receivedData = fetch_DB_Data('Wallet')
+        .then(function (result) {
+            res.send(result);
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
+
 
 app.use(bodyParser.json());
 
@@ -155,6 +165,76 @@ app.post('/addWalletExpenses', urlencodedParser, function (req, res) {
             res.send(err);
         });
 });
+
+app.use(bodyParser.json());
+app.post('/Wallet/:id', urlencodedParser, function (req, res) {
+    fetch_DB_Data('Wallet')
+        .then((data) => {
+
+            if (req.params.id === 'remove' && data[0].Money > 0) {
+                updateWallet(req.body.Withdraw, data[0].Money, 'Wallet', req.params.id)
+                    .then((data) => {
+                        console.log("updated", data);
+                    })
+                    .catch((err) => {
+                        res.send(err);
+                    });
+            }
+
+
+            if (req.params.id === 'add') {
+                updateWallet(req.body.Deposit, data[0].Money, 'Wallet', req.params.id)
+                    .then((updateddata) => {
+                        console.log("updated", updateddata);
+                    })
+                    .catch((err) => {
+                        res.send(err);
+                    });
+            }
+            if (data[0].Money < 0) {
+                console.log("nomey")
+                res.send("no money", data);
+
+            }
+
+
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
+
+
+
+function updateWallet(new_money, money, collectionName, mode) {
+    if (mode == "add") {
+        new_money = new_money + money;
+    }
+    if (mode == "remove") {
+        new_money = money - new_money;
+    }
+    var promise = new Promise((resolve, reject) => {
+        mongoClient.connect(url, function (err, client) {
+            if (err) {
+                console.log("Error", err);
+            }
+            else {
+                var db = client.db(dbName);
+                var collection = db.collection(collectionName);
+                collection.update({ "_id": new mongodb.ObjectID("5b6c01fdaa67fe11f3cf5f70") }, { Money: new_money }, function (result, err) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve("Updated");
+                    }
+                    client.close();
+                });
+            }
+        });
+    });
+    return promise;
+}
 
 
 

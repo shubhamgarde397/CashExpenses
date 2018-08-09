@@ -1,93 +1,91 @@
-<router-outlet>
-  <div class="well">
+<div class="well container">
 
-    <form [formGroup]="myFormGroup" (ngSubmit)="storeWalletExpenses(myFormGroup)" submitted=true enctype="multipart/form data"
-      action="/" name="myform" id="myform">
-      <!-- value is not going in ts file    ,nopid.value-->
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeWalletExpenses(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/" name="myform" id="myform">
+    <!-- value is not going in ts file    ,nopid.value-->
 
-      <!--Date-->
-      <div class="form-group row">
-
-        <div class="col-xs-3">
-          <input type="date" id="Date" class="form-control" formControlName="Date" placeholder="Date">
-        </div>
-        <div class="col-xs-2">
-          <div [hidden]="myFormGroup.controls.Date.valid">
-            <font color="red">
-              <span class="glyphicon glyphicon-remove"></span>
-            </font>
-          </div>
+    <!--Date-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Date</div>
+      <div class="col-xs-3">
+        <input type="date" id="Date" class="form-control" formControlName="Date" placeholder="Date">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.Date.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
         </div>
       </div>
-      <!--Date-->
+    </div>
+    <!--Date-->
 
-      <!--Description-->
-      <div class="form-group row">
-
-        <div class="col-xs-3">
-          <input type="text" id="Description" class="form-control" formControlName="Description" placeholder="Description">
-        </div>
-        <div class="col-xs-2">
-          <div [hidden]="myFormGroup.controls.Description.valid">
-            <font color="red">
-              <span class="glyphicon glyphicon-remove"></span>
-            </font>
-          </div>
+    <!--Description-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Description</div>
+      <div class="col-xs-3">
+        <input type="text" id="Description" class="form-control" formControlName="Description" placeholder="Description">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.Description.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
         </div>
       </div>
-      <!--Description-->
+    </div>
+    <!--Description-->
 
-      <!--Deposit-->
-      <div class="form-group row">
-
-        <div class="col-xs-3">
-          <input type="text" id="Deposit" class="form-control" formControlName="Deposit" placeholder="Deposit">
-        </div>
-        <div class="col-xs-2">
-          <div [hidden]="myFormGroup.controls.Deposit.valid">
-            <font color="red">
-              <span class="glyphicon glyphicon-remove"></span>
-            </font>
-          </div>
+    <!--Deposit-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Credit</div>
+      <div class="col-xs-3">
+        <input type="number" id="Deposit" class="form-control" formControlName="Deposit" placeholder="Credit">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.Deposit.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
         </div>
       </div>
-      <!--Name-->
+    </div>
+    <!--Name-->
 
 
 
-      <div class="row">
-        <div class="form-group" class="col-xs-2"></div>
-        <div class="form-group" class="col-xs-1">
-          <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-            <i class="material-icons">send</i>
-          </button>
-        </div>
-
-        <div *ngIf="!submitted" class="col-xs-1">
-
-          <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
-            <i class="material-icons">undo</i>
-          </button>
-        </div>
-
-        <div *ngIf="submitted" class="col-xs-1">
-          <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
-            <i class="material-icons">add</i>
-          </button>
-        </div>
-
-        <div class="col-xs-1">
-
-          <button type="button" class="btn btn-success" (click)="backClicked()">
-            <i class="material-icons">keyboard_backspace</i>
-          </button>
-        </div>
-
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
       </div>
 
-    </form>
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+      <div class="col-xs-1">
+
+        <button type="button" class="btn btn-success" (click)="backClicked()">
+          <i class="material-icons">keyboard_backspace</i>
+        </button>
+      </div>
+
+    </div>
+
+  </form>
 
 
 
-  </div>
-</router-outlet>
+</div>

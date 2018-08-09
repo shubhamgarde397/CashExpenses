@@ -60,10 +60,10 @@ export class HandledataService {
     }
   }
 
-  store(formBody, api) {
+  store(formBody, api, id = " ") {
     this.createHeader();
     return this.httpClient.post(
-      this.urlno + '/' + api,
+      `${this.urlno + '/' + api}/${id}`,
       formBody,
       { headers: this.headerPost }
     ).pipe(map((response) => response));

@@ -44,9 +44,14 @@ export class WalletRemoveComponent implements OnInit {
   }
 
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
-    console.log(JSON.stringify(value));
+
     this.submitted = true;
     this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
+    this.handleservice.store(value, 'Wallet', 'remove')
+      .subscribe(x => {
+        this.response = x;
+        this._location.back();
+      });//old
   }
   back() {
     this.submitted = !this.submitted;

@@ -1,6 +1,6 @@
 .table-wrapper-scroll-y {
   display: block;
-  max-height: 600px;
+  max-height: 500px;
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -10,3 +10,7 @@
   color: white;
   font-weight: bold;
 }
+/* 
+.basic{
+  margin-left: 10px
+} */
