@@ -1,19 +1,23 @@
 <div class="well row">
-  <div class="col-sm-4 basic" routerLink="AddExpenses" style="background-color: green;color:white">
-    <h1>
-      <i class="material-icons " style="color: white ">add</i>
-      Add
-    </h1>
-  </div>
-  <div class="col-sm-4">
+
+
+  <button class="col-sm-4 btn btn-success" routerLink="AddExpenses" style="height: 80px;">
+
+    <i class="material-icons " style="color: white">add</i>
+    <b style="font-size: 30px;margin-left: 20px;">Add</b>
+  </button>
+
+  <div class="col-sm-4" style="text-align: center">
     <h1>Wallet: {{WalletMoney}}</h1>
   </div>
-  <div class="col-sm-4" routerLink="RemoveExpenses" style="background-color:red; color:white">
-    <h1>
-      <i class="material-icons " style="background-color: red; color: white ">remove</i>
-      Remove
-    </h1>
-  </div>
+  <button class="col-sm-4 btn btn-danger" routerLink="RemoveExpenses" style="height: 80px;">
+    <b>
+      <i class="material-icons " style="color: white ">remove</i>
+    </b>
+
+    <b style="font-size: 30px;margin-left: 20px;">Remove</b>
+  </button>
+
 </div>
 
 
@@ -47,7 +51,9 @@
         </tr>
       </tbody>
     </table>
-    <button (click)="download()" class="btn btn-warning">Download</button>
+    <div style="text-align: center">
+      <button (click)="download()" class="btn btn-warning" style="height: 80px;width:1400px">Download</button>
+    </div>
   </div>
 
 

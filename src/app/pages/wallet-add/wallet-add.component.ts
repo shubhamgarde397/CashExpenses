@@ -35,7 +35,7 @@ export class WalletAddComponent implements OnInit {
     this.model = new wallet(this.Date, this.Description, this.Deposit, this.Flag);
     this.myFormGroup = this.formBuilder.group({
       Date: [this.model.Date, Validators.required],
-      Description: [this.model.Description, Validators.required],
+      Description: [this.model.Description, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
       Deposit: [this.model.Deposit, Validators.required]
 
     });

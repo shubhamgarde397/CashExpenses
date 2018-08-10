@@ -36,7 +36,7 @@ export class WalletRemoveComponent implements OnInit {
     this.model = new wallet(this.Date, this.Description, this.Withdraw);
     this.myFormGroup = this.formBuilder.group({
       Date: [this.model.Date, Validators.required],
-      Description: [this.model.Description, Validators.required],
+      Description: [this.model.Description, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
       Withdraw: [this.model.Withdraw, Validators.required]
     });
 
