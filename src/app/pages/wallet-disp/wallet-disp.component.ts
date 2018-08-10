@@ -63,7 +63,7 @@ export class WalletDispComponent implements OnInit {
 
   download() {
 
-    // this.newAuthor = this.fetchData();
+
     this.newAuthor = this.handleservice.getData('getCashExpenses')
       .subscribe((res: Response) => {
         this.newAuthor = res.json();
@@ -78,6 +78,7 @@ export class WalletDispComponent implements OnInit {
         ];
 
         var doc = new jsPDF('p', 'pt');
+        doc.text("CASH EXPENSES DETAILS");
         var i = 1;
         for (var key in this.newAuthor) {
           rows = [...rows, Object.assign({}, {
@@ -86,7 +87,7 @@ export class WalletDispComponent implements OnInit {
           })];
           i++;
         }
-        doc.text("CASH EXPENSES DETAILS");
+
         doc.autoTable(columns, rows);
         doc.save('table.pdf');
 

@@ -63,7 +63,7 @@ export class WalletRemoveComponent implements OnInit {
       .subscribe((res: Response) => {
         this.Wallet = res.json();
         this.WalletMoney = this.Wallet[0].Money;
-        if (this.WalletMoney > 0 && this.WalletMoney > value.Withdraw) {
+        if (this.WalletMoney > 0 && this.WalletMoney >= value.Withdraw) {
           value.Flag = 'W';
           this.submitted = true;
           this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
