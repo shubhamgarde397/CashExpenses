@@ -1,4 +1,12 @@
-<div class="well">
+<div class="well" *ngIf="WalletMoney==0">
+  <h1>Cannot remove</h1>
+  <div class="col-xs-1">
+    <button type="button" class="btn btn-success" (click)="backClicked()">
+      <i class="material-icons">keyboard_backspace</i>
+    </button>
+  </div>
+</div>
+<div class="well" *ngIf="WalletMoney > 0">
 
   <form [formGroup]="myFormGroup" (ngSubmit)="storeWalletExpenses(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/" name="myform" id="myform">

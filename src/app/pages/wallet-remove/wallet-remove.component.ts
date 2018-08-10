@@ -17,6 +17,8 @@ import { Location } from '@angular/common';
   providers: [HandledataService]
 })
 export class WalletRemoveComponent implements OnInit {
+  WalletMoney: any;
+  Wallet: any;
   myFormGroup: FormGroup;
   model: wallet;//mapped it to a variable
   submitted = false;
@@ -37,21 +39,47 @@ export class WalletRemoveComponent implements OnInit {
       Description: [this.model.Description, Validators.required],
       Withdraw: [this.model.Withdraw, Validators.required]
     });
+
+    this.fetchWallet();
   }
 
   backClicked() {
     this._location.back();
   }
 
+  fetchWallet = function () {
+    this.handleservice.getData('Wallet')
+      .subscribe((res: Response) => {
+
+        this.Wallet = res.json();
+        this.WalletMoney = this.Wallet[0].Money;
+
+      });
+  }
+
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
 
-    this.submitted = true;
-    this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
-    this.handleservice.store(value, 'Wallet', 'remove')
-      .subscribe(x => {
-        this.response = x;
-        this._location.back();
-      });//old
+    this.handleservice.getData('Wallet')
+      .subscribe((res: Response) => {
+        this.Wallet = res.json();
+        this.WalletMoney = this.Wallet[0].Money;
+        if (this.WalletMoney > 0 && this.WalletMoney > value.Withdraw) {
+          value.Flag = 'W';
+          this.submitted = true;
+          this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
+          this.handleservice.store(value, 'Wallet', 'remove')
+            .subscribe(x => {
+              this.response = x;
+              this._location.back();
+            });//old
+        }
+        else {
+          alert("Money too Low! Go Get A Job! And Feed me!");
+        }
+      });
+
+
+
   }
   back() {
     this.submitted = !this.submitted;

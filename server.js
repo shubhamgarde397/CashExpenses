@@ -221,7 +221,7 @@ function updateWallet(new_money, money, collectionName, mode) {
             else {
                 var db = client.db(dbName);
                 var collection = db.collection(collectionName);
-                collection.update({ "_id": new mongodb.ObjectID("5b6c01fdaa67fe11f3cf5f70") }, { Money: new_money }, function (result, err) {
+                collection.update({ "_id": new mongodb.ObjectID("5b6d4205ddb173e4c1789a1b") }, { Money: new_money }, function (result, err) {
                     if (err) {
                         reject(err);
                     }

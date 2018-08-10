@@ -36,15 +36,20 @@
           <th scope="row">{{j+1}}</th>
           <td>{{i.Date}}</td>
           <td>{{i.Description}}</td>
-          <td>{{i.Deposit}}
-            <i class="material-icons" style="color:green">trending_up</i>
+          <td>
+            <i class="material-icons" style="color:green" *ngIf="i.Flag=='D'">trending_up</i>
+            {{i.Deposit}}
           </td>
-          <td>{{i.Withdraw}}
-            <i class="material-icons" style="color:red">trending_up</i>
+          <td>
+            <i class="material-icons" style="color:red" *ngIf="i.Flag=='W'">trending_down</i>
+            {{i.Withdraw}}
           </td>
         </tr>
       </tbody>
     </table>
+    <button (click)="download()" class="btn btn-warning">Download</button>
   </div>
+
+
 
 </router-outlet>

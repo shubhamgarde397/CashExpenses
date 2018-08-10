@@ -17,6 +17,7 @@ import { Location } from '@angular/common';
   providers: [HandledataService]
 })
 export class WalletAddComponent implements OnInit {
+  Flag: any;
   myFormGroup: FormGroup;
   model: wallet;//mapped it to a variable
   submitted = false;
@@ -31,11 +32,12 @@ export class WalletAddComponent implements OnInit {
   constructor(private router: Router, private handleservice: HandledataService, private http: Http, private formBuilder: FormBuilder, private _location: Location) { }
   name: string;
   ngOnInit() {
-    this.model = new wallet(this.Date, this.Description, this.Deposit);
+    this.model = new wallet(this.Date, this.Description, this.Deposit, this.Flag);
     this.myFormGroup = this.formBuilder.group({
       Date: [this.model.Date, Validators.required],
       Description: [this.model.Description, Validators.required],
       Deposit: [this.model.Deposit, Validators.required]
+
     });
   }
 
@@ -47,9 +49,15 @@ export class WalletAddComponent implements OnInit {
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
 
     this.submitted = true;
+    value.Flag = 'D';
+    console.log(value)
     this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
-    this.handleservice.store(value, 'Wallet', 'add').subscribe(x => this.response = x);//old
-    this._location.back();
+    this.handleservice.store(value, 'Wallet', 'add')
+      .subscribe(x => {
+        this.response = x
+        this._location.back();
+      });//old
+
   }
   back() {
     this.submitted = !this.submitted;
