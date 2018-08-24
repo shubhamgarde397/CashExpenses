@@ -74,7 +74,8 @@ export class WalletRemoveComponent implements OnInit {
             });//old
         }
         else {
-          alert("Money too Low! Go Get A Job! And Feed me!");
+          // alert("Money too Low! Go Get A Job! And Feed me!");
+          alert("Remove correct amount of money,Please try again!");
         }
       });
 

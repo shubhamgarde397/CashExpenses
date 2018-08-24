@@ -62,12 +62,9 @@ export class WalletDispComponent implements OnInit {
   }
 
   download() {
-
-
     this.newAuthor = this.handleservice.getData('getCashExpenses')
       .subscribe((res: Response) => {
         this.newAuthor = res.json();
-
         var rows = [];
         var columns = [
           { title: "Srno", dataKey: "no" },

@@ -22,6 +22,7 @@ import { NavigationComponent } from './pages/navigation/navigation.component';
 import { WalletDispComponent } from './pages/wallet-disp/wallet-disp.component';
 import { WalletAddComponent } from './pages/wallet-add/wallet-add.component';
 import { WalletRemoveComponent } from './pages/wallet-remove/wallet-remove.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { WalletRemoveComponent } from './pages/wallet-remove/wallet-remove.compo
     NavigationComponent,
     WalletDispComponent,
     WalletAddComponent,
-    WalletRemoveComponent
+    WalletRemoveComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

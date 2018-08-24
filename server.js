@@ -166,6 +166,19 @@ app.post('/addWalletExpenses', urlencodedParser, function (req, res) {
         });
 });
 
+
+
+app.post('/addcategorydata', urlencodedParser, function (req, res) {
+    var body = req.body;
+    var receivedData = store_DB_Data('Categories', body)
+        .then(function (result) {
+            res.send(result);
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
+
 app.use(bodyParser.json());
 app.post('/Wallet/:id', urlencodedParser, function (req, res) {
     fetch_DB_Data('Wallet')
