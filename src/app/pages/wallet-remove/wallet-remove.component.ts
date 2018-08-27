@@ -24,21 +24,29 @@ export class WalletRemoveComponent implements OnInit {
   submitted = false;
 
   response: any;
-
+  private Flag: any;
   private Date: Date;
-  private Description: string;
+  private Category: string;
+  private SubCategory: string;
   private Withdraw: number;
+  private categorylist: any;
 
 
   constructor(private router: Router, private handleservice: ApiCallsService, private http: Http, private formBuilder: FormBuilder, private _location: Location) { }
   name: string;
   ngOnInit() {
-    this.model = new wallet(this.Date, this.Description, this.Withdraw);
+    this.model = new wallet(this.Date, this.Category, this.SubCategory, this.Withdraw, this.Flag);
     this.myFormGroup = this.formBuilder.group({
       Date: [this.model.Date, Validators.required],
-      Description: [this.model.Description, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
+      Category: [this.model.Category, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
+      SubCategory: [this.model.SubCategory, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
       Withdraw: [this.model.Withdraw, Validators.required]
     });
+
+    this.handleservice.handleData('getcategorydata', 0, 0)
+      .subscribe((res: Response) => {
+        this.categorylist = res.json();
+      });
 
     this.fetchWallet();
   }

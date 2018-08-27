@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
   model: category;//mapped it to a variable
   modelSubmitted: category;
   submitted = false;
+  private categorylist: any;
 
   response: any;
 
@@ -32,12 +33,29 @@ export class CategoriesComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       category: [this.model.category, Validators.required]
     });
+
+    this.fetchData();
+  }
+  fetchData() {
+    this.handleservice.handleData('getcategorydata', 0, 0)
+      .subscribe((res: Response) => {
+        this.categorylist = res.json();
+      });
   }
 
   storeCategoryData({ value, valid }: { value: category, valid: boolean }) {
     console.log(JSON.stringify(value));
     this.submitted = true;
-    this.handleservice.handleData('addcategorydata', 1, 0, value).subscribe(x => this.response = x);//old
+    this.handleservice.handleData('addcategorydata', 1, 0, value).subscribe((response: Response) => { this.fetchData(); });//old
+  }
+
+  deleteCategory(id) {
+    if (confirm('Are you sure?')) {
+      this.handleservice.handleData('delcategorydata', 2, 1, {}, id)
+        .subscribe((response: Response) => {
+          this.fetchData();
+        });
+    }
   }
   back() {
     this.submitted = !this.submitted;

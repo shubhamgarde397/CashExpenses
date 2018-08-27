@@ -25,6 +25,96 @@ app.use(function (req, res, next) {
     next();
 });
 
+
+function getTableName(tablename) {
+    var promise = new Promise((resolve, reject) => {
+        tablename = tablename.replace(/ /g, "_");
+        resolve(tablename);
+    });
+    return promise;
+}
+
+function handleData(apiCall, collectionName, sortData = {}, findData = {}, body = {}, manupulateData = {}) {
+    var promise = new Promise((resolve, reject) => {
+        mongoClient.connect(url, function (err, client) {
+            if (err) { console.log(common_data.Messages.error, err); }
+            else {
+                getTableName(collectionName)
+                    .then((tableName) => {
+                        var db = client.db(dbName);
+
+                        if (apiCall == 0) {
+                            db.collection(tableName)
+                                .find(findData).sort(sortData).toArray(function (err, result) {
+                                    if (err) {
+                                        reject(err);
+                                    }
+                                    else {
+                                        resolve(result);
+                                    }
+                                    client.close();
+                                });
+                        }
+                        if (apiCall == 1) {
+                            db.collection(tableName)
+                                .insert(body, function (result, err) {
+                                    if (err) {
+                                        reject(err);
+                                    }
+                                    else {
+                                        resolve(result);
+                                    }
+                                    client.close();
+                                });
+                        }
+                        if (apiCall == 2) {
+                            db.collection(tableName)
+                                .deleteOne({ _id: new mongodb.ObjectID(manupulateData) }, function (result, err) {
+                                    if (err) {
+                                        reject(err);
+                                    }
+                                    else {
+                                        console.log("done");
+                                        resolve(result);
+                                    }
+                                    client.close();
+                                });
+                        }
+                        if (apiCall == 3) {
+                            db.collection(tableName)
+                                .update({ _id: new mongodb.ObjectID(manupulateData) },
+                                    body,
+                                    function (result, err) {
+                                        if (err) {
+                                            reject(err);
+                                        }
+                                        else {
+                                            resolve("Data updated Successfully!");
+                                        }
+                                    });
+
+                            client.close();
+                        }
+                        if (apiCall == 4) {
+                            db.collection(tableName).find(findData)
+                                .count(function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        resolve((JSON.stringify(result)));
+                                    }
+                                });
+                            client.close();
+                        }
+
+                    });
+            }
+        });
+    });
+    return promise;
+}
+
+
 // ***************************************
 // *            GET REQUESTS             *
 // ***************************************
@@ -107,33 +197,8 @@ function store_DB_Data(collectionName, body) {
 
 }
 
-function delete_DB_Data(collectionName, id) {
-    var promise = new Promise((resolve, reject) => {
-        mongoClient.connect(url, function (err, client) {
-            if (err) {
-                console.log("Error", err);
-            }
-            else {
-                var db = client.db(dbName);
-                var collection = db.collection(collectionName);
-                collection.deleteOne({ _id: new mongodb.ObjectID(id) }, function (result, err) {
-                    if (err) {
-                        reject(err);
-                    }
-                    else {
-                        resolve(result);
-                    }
-                    client.close();
-                });
-            }
-        });
-    });
-    return promise;
-}
-
-
 app.get('/getCashExpenses', function (req, res) {
-    var receivedData = fetch_DB_Data('Cash')
+    var receivedData = handleData(0, 'Cash', { "Date": 1 })
         .then(function (result) {
             res.send(result);
         })
@@ -143,7 +208,7 @@ app.get('/getCashExpenses', function (req, res) {
 });
 
 app.get('/Wallet', function (req, res) {
-    var receivedData = fetch_DB_Data('Wallet')
+    var receivedData = handleData(0, 'Wallet')
         .then(function (result) {
             res.send(result);
         })
@@ -157,7 +222,7 @@ app.use(bodyParser.json());
 
 app.post('/addWalletExpenses', urlencodedParser, function (req, res) {
     var body = req.body;
-    var receivedData = store_DB_Data('Cash', body)
+    var receivedData = handleData(1, 'Cash', {}, {}, body)
         .then(function (result) {
             res.send(result);
         })
@@ -170,7 +235,30 @@ app.post('/addWalletExpenses', urlencodedParser, function (req, res) {
 
 app.post('/addcategorydata', urlencodedParser, function (req, res) {
     var body = req.body;
-    var receivedData = store_DB_Data('Categories', body)
+    var receivedData = handleData(1, 'Categories', {}, {}, body)
+        .then(function (result) {
+            res.send(result);
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
+
+app.delete('/delcategorydata/:id', function (req, res) {
+    console.log(req.params.id);
+    var receivedData = handleData(2, 'Categories', {}, {}, {}, req.params.id)
+        .then(function (result) {
+            console.log(result);
+            res.send(result);
+
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+})
+
+app.get('/getcategorydata', function (req, res) {
+    var receivedData = handleData(0, 'Categories', { "category": 1 })
         .then(function (result) {
             res.send(result);
         })
@@ -181,11 +269,11 @@ app.post('/addcategorydata', urlencodedParser, function (req, res) {
 
 app.use(bodyParser.json());
 app.post('/Wallet/:id', urlencodedParser, function (req, res) {
-    fetch_DB_Data('Wallet')
+    handleData(0, 'Wallet')
         .then((data) => {
 
             if (req.params.id === 'remove' && data[0].Money > 0) {
-                updateWallet(req.body.Withdraw, data[0].Money, 'Wallet', req.params.id)
+                updateWallet(req.body.Withdraw, data[0].Money, 'Wallet', req.params.id, data[0]._id)
                     .then((data) => {
                         console.log("updated", data);
                     })
@@ -196,7 +284,7 @@ app.post('/Wallet/:id', urlencodedParser, function (req, res) {
 
 
             if (req.params.id === 'add') {
-                updateWallet(req.body.Deposit, data[0].Money, 'Wallet', req.params.id)
+                updateWallet(req.body.Deposit, data[0].Money, 'Wallet', req.params.id, data[0]._id)
                     .then((updateddata) => {
                         console.log("updated", updateddata);
                     })
@@ -219,7 +307,7 @@ app.post('/Wallet/:id', urlencodedParser, function (req, res) {
 
 
 
-function updateWallet(new_money, money, collectionName, mode) {
+function updateWallet(new_money, money, collectionName, mode, id) {
     if (mode == "add") {
         new_money = new_money + money;
     }
@@ -234,7 +322,8 @@ function updateWallet(new_money, money, collectionName, mode) {
             else {
                 var db = client.db(dbName);
                 var collection = db.collection(collectionName);
-                collection.update({ "_id": new mongodb.ObjectID("5b6d4205ddb173e4c1789a1b") }, { Money: new_money }, function (result, err) {
+                // 3,Wallet,{},{},{Money:new_money},id
+                collection.update({ "_id": new mongodb.ObjectID(id) }, { Money: new_money }, function (result, err) {
                     if (err) {
                         reject(err);
                     }
@@ -250,8 +339,6 @@ function updateWallet(new_money, money, collectionName, mode) {
 }
 
 
-
-
 app.delete('/test', function (req, res) {
     var receivedData = delete_DB_Data(req.params.data, req.params.id)//tablename and _id
         .then(function (result) {
@@ -262,31 +349,6 @@ app.delete('/test', function (req, res) {
         });
 });
 
-
-
-app.put('/updateregulartruckdata', urlencodedParser, function (req, res) {
-    mongoClient.connect(url, function (err, client) {
-        if (err) {
-            console.log("Error", err);
-        }
-        else {
-
-            var db = client.db(dbName);
-
-            var collection = db.collection("RegularTruck");
-            collection.update({ "_id": new mongodb.ObjectID(req.body.id) }, { "regulartruck": req.body.truckno }, function (result, err) {
-                if (err) {
-                    res.send(err);
-                }
-                else {
-                    res.send(common_data.Messages.success.update);
-                }
-            });
-
-            client.close();
-        }
-    });
-});
 
 // *********** END OF PUT REQUESTS **************
 

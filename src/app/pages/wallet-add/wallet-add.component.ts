@@ -21,9 +21,11 @@ export class WalletAddComponent implements OnInit {
   private submitted = false;
   private response: any;
   private Date: Date;
-  private Description: string;
+  private Category: string;
+  private SubCategory: string;
   private Deposit: number;
   public name: string;
+  private categorylist: any;
 
   constructor(
     private handleservice: ApiCallsService,
@@ -33,12 +35,20 @@ export class WalletAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.model = new wallet(this.Date, this.Description, this.Deposit, this.Flag);
+    this.model = new wallet(this.Date, this.Category, this.SubCategory, this.Deposit, this.Flag);
     this.myFormGroup = this.formBuilder.group({
       Date: [this.model.Date, Validators.required],
-      Description: [this.model.Description, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
+      Category: [this.model.Category, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
+      SubCategory: [this.model.SubCategory, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
       Deposit: [this.model.Deposit, Validators.required]
     });
+
+
+
+    this.handleservice.handleData('getcategorydata', 0, 0)
+      .subscribe((res: Response) => {
+        this.categorylist = res.json();
+      });
 
   }
 
@@ -49,7 +59,7 @@ export class WalletAddComponent implements OnInit {
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
     this.submitted = true;
     value.Flag = 'D';
-    this.handleservice.handleData('addWalletExpenses', 1, 0, {}).subscribe(x => this.response = x);//old
+    this.handleservice.handleData('addWalletExpenses', 1, 0, value).subscribe(x => this.response = x);//old
     this.handleservice.handleData('Wallet', 1, 1, value, 'add')
       .subscribe(x => {
         this.response = x

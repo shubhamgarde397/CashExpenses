@@ -29,7 +29,8 @@
         <tr>
           <th scope="col">Srno</th>
           <th scope="col">Date</th>
-          <th scope="col">Description</th>
+          <th scope="col">Category</th>
+          <th scope="col">SubCategory</th>
           <th scope="col">Deposit</th>
           <th scope="col">Withdraw</th>
         </tr>
@@ -39,7 +40,8 @@
         <tr *ngFor="let i of cash_expenses;let j = index">
           <th scope="row">{{j+1}}</th>
           <td>{{i.Date}}</td>
-          <td>{{i.Description}}</td>
+          <td>{{i.Category}}</td>
+          <td>{{i.SubCategory}}</td>
           <td>
             <i class="material-icons" style="color:green" *ngIf="i.Flag=='D'">trending_up</i>
             {{i.Deposit}}
@@ -66,7 +68,7 @@
     <button class="col-sm-12 btn btn-success" routerLink="AddCategory" style="height: 80px;">
 
       <i class="material-icons " style="color: white">add</i>
-      <b style="font-size: 30px;margin-left: 20px;">Add</b>
+      <b style="font-size: 30px;margin-left: 20px;">Add Category</b>
     </button>
   </div>
 

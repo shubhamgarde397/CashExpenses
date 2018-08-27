@@ -28,21 +28,43 @@
     </div>
     <!--Date-->
 
-    <!--Description-->
+    <!--Category-->
     <div class="form-group row">
-      <div class="col-sm-3" style="font-weight: bold">Description</div>
+      <div class="col-sm-3" style="font-weight: bold">Category</div>
+
       <div class="col-xs-3">
-        <input type="text" id="Description" class="form-control" formControlName="Description" placeholder="Description">
+        <select id="Category" class="form-control" formControlName="Category">
+          <option selected>Select Category</option>
+          <option *ngFor="let i of categorylist">{{i.category}}</option>
+        </select>
       </div>
+
+
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.Description.valid">
+        <div [hidden]="myFormGroup.controls.Category.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
       </div>
     </div>
-    <!--Description-->
+    <!--Category-->
+
+    <!--SubCategory-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Sub-Category</div>
+      <div class="col-xs-3">
+        <input type="text" id="SubCategory" class="form-control" formControlName="SubCategory" placeholder="Sub Category">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.SubCategory.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--SubCategory-->
 
     <!--Withdraw-->
     <div class="form-group row">
