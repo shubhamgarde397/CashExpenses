@@ -19,14 +19,12 @@ export class ApiCallsService {
       case 1: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1); break;
       case 2: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1, id2); break;
       case 3: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1, id2, id3); break;
-      default: return "Yedya";
     }
     switch (apiCall) {
       case 0: return this.http.get(this.URL).pipe(map((res) => res));
       case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
       case 2: return this.http.delete(this.URL).pipe(map((res) => res));
       case 3: return this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
-      default: return "Yedya";
     }
   }
 }

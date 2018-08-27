@@ -55,12 +55,14 @@ export class WalletDispComponent implements OnInit {
   download() {
     this.newAuthor = this.handleservice.handleData('getCashExpenses', 0, 0)
       .subscribe((res: Response) => {
+        console.log(res.json());
         this.newAuthor = res.json();
         var rows = [];
         var columns = [
           { title: "Srno", dataKey: "no" },
           { title: "Date", dataKey: "date" },
-          { title: "Description", dataKey: "desc" },
+          { title: "Category", dataKey: "cat" },
+          { title: "SubCategory", dataKey: "subcat" },
           { title: "Deposit", dataKey: "dep" },
           { title: "Withdraw", dataKey: "with" },
         ];
@@ -70,7 +72,7 @@ export class WalletDispComponent implements OnInit {
         var i = 1;
         for (var key in this.newAuthor) {
           rows = [...rows, Object.assign({}, {
-            "no": i, "date": this.newAuthor[key].Date, "desc": this.newAuthor[key].Description,
+            "no": i, "date": this.newAuthor[key].Date, "cat": this.newAuthor[key].Category, "subcat": this.newAuthor[key].SubCategory,
             "dep": this.newAuthor[key].Deposit, "with": this.newAuthor[key].Withdraw
           })];
           i++;
