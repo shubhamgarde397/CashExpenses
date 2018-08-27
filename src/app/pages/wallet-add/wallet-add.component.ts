@@ -39,7 +39,7 @@ export class WalletAddComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       Date: [this.model.Date, Validators.required],
       Category: [this.model.Category, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
-      SubCategory: [this.model.SubCategory, [Validators.required, Validators.pattern("^[a-zA-Z]*")]],
+      SubCategory: [this.model.SubCategory, [Validators.required]],
       Deposit: [this.model.Deposit, Validators.required]
     });
 
