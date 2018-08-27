@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
-// var jspdf = require('jspdf');
-// import { jsPDF } from 'jspdf-autotable';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
-
 
 @Component({
   selector: 'app-wallet-disp',
@@ -14,16 +10,12 @@ import 'jspdf-autotable';
   providers: [ApiCallsService]
 })
 export class WalletDispComponent implements OnInit {
-  villageslist;
-  show = false;
-  found;
-  arr;
-  public Wallet: number;
-  public WalletMoney: number;
-  newAuthor: any;
+  private show = false;
+  private Wallet: number;
+  private WalletMoney: number;
+  private newAuthor: any;
 
   constructor(private handleservice: ApiCallsService) { }
-
 
   fetchData = function () {
     this.handleservice.handleData('getCashExpenses', 0, 0)
@@ -35,10 +27,8 @@ export class WalletDispComponent implements OnInit {
   fetchWallet = function () {
     this.handleservice.handleData('Wallet', 0, 0)
       .subscribe((res: Response) => {
-
         this.Wallet = res.json();
         this.WalletMoney = this.Wallet[0].Money;
-
       });
   }
 
@@ -49,7 +39,6 @@ export class WalletDispComponent implements OnInit {
   ngOnInit() {
     this.fetchData();
     this.fetchWallet();
-
   }
 
   download() {
@@ -77,12 +66,8 @@ export class WalletDispComponent implements OnInit {
           })];
           i++;
         }
-
         doc.autoTable(columns, rows);
         doc.save('table.pdf');
-
       });
-
-
   }
 }
