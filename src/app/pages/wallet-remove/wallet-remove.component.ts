@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HandledataService } from '../../services/handleData/handledata.service';
+import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
 import { wallet } from './wallet';
 import { Consts } from "../../utils/common/constants/const";
 import { FormsModule } from "@angular/forms";
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   selector: 'app-wallet-remove',
   templateUrl: './wallet-remove.component.html',
   styleUrls: ['./wallet-remove.component.css'],
-  providers: [HandledataService]
+  providers: [ApiCallsService]
 })
 export class WalletRemoveComponent implements OnInit {
   WalletMoney: any;
@@ -30,7 +30,7 @@ export class WalletRemoveComponent implements OnInit {
   private Withdraw: number;
 
 
-  constructor(private router: Router, private handleservice: HandledataService, private http: Http, private formBuilder: FormBuilder, private _location: Location) { }
+  constructor(private router: Router, private handleservice: ApiCallsService, private http: Http, private formBuilder: FormBuilder, private _location: Location) { }
   name: string;
   ngOnInit() {
     this.model = new wallet(this.Date, this.Description, this.Withdraw);
@@ -48,7 +48,7 @@ export class WalletRemoveComponent implements OnInit {
   }
 
   fetchWallet = function () {
-    this.handleservice.getData('Wallet')
+    this.handleservice.handleData('Wallet', 0, 0)
       .subscribe((res: Response) => {
 
         this.Wallet = res.json();
@@ -59,15 +59,15 @@ export class WalletRemoveComponent implements OnInit {
 
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
 
-    this.handleservice.getData('Wallet')
+    this.handleservice.handleData('Wallet', 0, 0)
       .subscribe((res: Response) => {
         this.Wallet = res.json();
         this.WalletMoney = this.Wallet[0].Money;
         if (this.WalletMoney > 0 && this.WalletMoney >= value.Withdraw) {
           value.Flag = 'W';
           this.submitted = true;
-          this.handleservice.store(value, 'addWalletExpenses').subscribe(x => this.response = x);//old
-          this.handleservice.store(value, 'Wallet', 'remove')
+          this.handleservice.handleData('addWalletExpenses', 1, 0, value).subscribe(x => this.response = x);//old
+          this.handleservice.handleData('Wallet', 1, 1, value, 'remove')
             .subscribe(x => {
               this.response = x;
               this._location.back();

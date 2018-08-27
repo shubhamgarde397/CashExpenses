@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HandledataService } from '../../services/handleData/handledata.service';
+import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
 import { category } from './category';
 import { Consts } from "../../utils/common/constants/const";
 import { FormsModule } from "@angular/forms";
@@ -25,7 +25,7 @@ export class CategoriesComponent implements OnInit {
   hostno: string = Consts.URL//change this ip
   portno: string = Consts.PORT_NUMBER;
   urlno: string = 'http://' + this.hostno + ':' + this.portno;
-  constructor(private router: Router, private handleservice: HandledataService, private http: Http, private formBuilder: FormBuilder, private _location: Location) { }
+  constructor(private router: Router, private handleservice: ApiCallsService, private http: Http, private formBuilder: FormBuilder, private _location: Location) { }
   name: string;
   ngOnInit() {
     this.model = new category(this.name);
@@ -37,7 +37,7 @@ export class CategoriesComponent implements OnInit {
   storeCategoryData({ value, valid }: { value: category, valid: boolean }) {
     console.log(JSON.stringify(value));
     this.submitted = true;
-    this.handleservice.store(value, 'addcategorydata').subscribe(x => this.response = x);//old
+    this.handleservice.handleData('addcategorydata', 1, 0, value).subscribe(x => this.response = x);//old
   }
   back() {
     this.submitted = !this.submitted;

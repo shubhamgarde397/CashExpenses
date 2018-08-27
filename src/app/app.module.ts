@@ -23,6 +23,9 @@ import { WalletDispComponent } from './pages/wallet-disp/wallet-disp.component';
 import { WalletAddComponent } from './pages/wallet-add/wallet-add.component';
 import { WalletRemoveComponent } from './pages/wallet-remove/wallet-remove.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { getFullApi } from './services/handleData/getFullApi.service';
+import { handleFunction } from './services/Functions/handleFunctions';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +54,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
       routes
     )
   ],
-  providers: [],
+  providers: [getFullApi, handleFunction],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

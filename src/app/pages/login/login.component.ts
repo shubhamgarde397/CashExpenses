@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HandledataService } from '../../services/handleData/handledata.service';
+import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
 import { login } from './login';
 import { Consts } from '../../utils/common/constants/const';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [HandledataService]
+  providers: [ApiCallsService]
 })
 export class LoginComponent implements OnInit {
   username: any;
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   logindetailslist;
 
 
-  constructor(private router: Router, private handleservice: HandledataService, private http: Http, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private handleservice: ApiCallsService, private http: Http, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {

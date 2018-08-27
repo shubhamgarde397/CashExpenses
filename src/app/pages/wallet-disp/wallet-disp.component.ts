@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HandledataService } from '../../services/handleData/handledata.service';
+import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
 // var jspdf = require('jspdf');
 // import { jsPDF } from 'jspdf-autotable';
 import * as jsPDF from 'jspdf';
@@ -11,7 +11,7 @@ import 'jspdf-autotable';
   selector: 'app-wallet-disp',
   templateUrl: './wallet-disp.component.html',
   styleUrls: ['./wallet-disp.component.css'],
-  providers: [HandledataService]
+  providers: [ApiCallsService]
 })
 export class WalletDispComponent implements OnInit {
   villageslist;
@@ -22,18 +22,18 @@ export class WalletDispComponent implements OnInit {
   public WalletMoney: number;
   newAuthor: any;
 
-  constructor(private handleservice: HandledataService) { }
+  constructor(private handleservice: ApiCallsService) { }
 
 
   fetchData = function () {
-    this.handleservice.getData('getCashExpenses')
+    this.handleservice.handleData('getCashExpenses', 0, 0)
       .subscribe((res: Response) => {
         this.cash_expenses = res.json();
       });
   };
 
   fetchWallet = function () {
-    this.handleservice.getData('Wallet')
+    this.handleservice.handleData('Wallet', 0, 0)
       .subscribe((res: Response) => {
 
         this.Wallet = res.json();
@@ -41,15 +41,6 @@ export class WalletDispComponent implements OnInit {
 
       });
   }
-
-  deleteVillageDetails = function (id) {
-    if (confirm('Are you sure?')) {
-      this.handleservice.delete(id, 'deletevillagedatadetails')
-        .subscribe((response: Response) => {
-          this.fetchData();
-        });
-    }
-  };
 
   back() {
     this.show = !this.show;
@@ -62,7 +53,7 @@ export class WalletDispComponent implements OnInit {
   }
 
   download() {
-    this.newAuthor = this.handleservice.getData('getCashExpenses')
+    this.newAuthor = this.handleservice.handleData('getCashExpenses', 0, 0)
       .subscribe((res: Response) => {
         this.newAuthor = res.json();
         var rows = [];
