@@ -3,9 +3,9 @@ import { Http, Response, Headers } from '@angular/http';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
+import { ApiCallsService } from '../../../services/handleData/ApiCalls.service';
 import { wallet } from './wallet';
-import { Consts } from "../../utils/common/constants/const";
+import { Consts } from "../../../utils/common/constants/const";
 import { Location } from '@angular/common';
 
 @Component({
@@ -43,13 +43,10 @@ export class WalletAddComponent implements OnInit {
       Deposit: [this.model.Deposit, Validators.required]
     });
 
-
-
-    this.handleservice.handleData('getcategorydata', 0, 0)
+    this.handleservice.handleData('Wallet/getcategorydata', 0, 0)
       .subscribe((res: Response) => {
         this.categorylist = res.json();
       });
-
   }
 
   backClicked() {
@@ -59,8 +56,8 @@ export class WalletAddComponent implements OnInit {
   storeWalletExpenses({ value, valid }: { value: wallet, valid: boolean }) {
     this.submitted = true;
     value.Flag = 'D';
-    this.handleservice.handleData('addWalletExpenses', 1, 0, value).subscribe(x => this.response = x);//old
-    this.handleservice.handleData('Wallet', 1, 1, value, 'add')
+    this.handleservice.handleData('Wallet/addWalletExpenses', 1, 0, value).subscribe(x => this.response = x);//old
+    this.handleservice.handleData('Wallet/Wallet', 1, 1, value, 'add')
       .subscribe(x => {
         this.response = x
         this._location.back();

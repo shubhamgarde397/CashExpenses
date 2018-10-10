@@ -1,0 +1,58 @@
+{
+    "required": {
+        "http": "http",
+        "cors": "cors",
+        "url": "mongodb://localhost:27017",
+        "bodyParser": "body-parser",
+        "mongodb": "mongodb",
+        "express": "express"
+    },
+    "database": {
+        "dbname": "CashExpenses"
+    },
+    "table_api": {
+        "deleteByID": {
+            "delgstdetailsdata": "/delgstdetailsdata/:id",
+            "delImpgstdetailsdata": "/delImpgstdetailsdata/:id",
+            "deleteownerdetails": "/deleteownerdetails/:id",
+            "delFinolexdetailsdata": "/delFinolexdetailsdata/:id/:data",
+            "delBookingdetailsdata": "/delBookingdetailsdata/:id/:nop",
+            "delDailydata": "/delDailydata/:id",
+            "deletedriverdetails": "/deletedriverdetails/:id",
+            "deleteregulardatadetails": "/deleteregulardatadetails/:id",
+            "deletevillagedatadetails": "/"
+        },
+        "count": {}
+    },
+    "table_name": {
+        "gstdetails": "gstdetails",
+        "impgstdetails": "impgstdetails",
+        "ownerdetails": "ownerdetails",
+        "dailydata": "dailydata",
+        "regularparty": "regularparty",
+        "driverdetails": "driverdetails",
+        "villagenames": "villagenames",
+        "login": "login"
+    },
+    "Messages": {
+        "success": {
+            "update": "Data Updated Successfully!"
+        },
+        "error": {
+            "database": "Error connecting to the Database!",
+            "update": "Error in Updating the current data"
+        },
+        "serverStartMsg": "NRCM MAIN SERVER : 3000"
+    },
+    "sortBy": {
+        "byVillageName": {
+            "village_name": 1
+        },
+        "byTruckNo": {
+            "truckno": 1
+        },
+        "byregulartruck": {
+            "regulartruck": 1
+        }
+    }
+}

@@ -1,0 +1,75 @@
+<div class="well row">
+
+
+  <button class="col-sm-4 btn btn-success" routerLink="AddExpenses" style="height: 80px;">
+
+    <i class="material-icons " style="color: white">add</i>
+    <b style="font-size: 30px;margin-left: 20px;">Add</b>
+  </button>
+
+  <div class="col-sm-4" style="text-align: center">
+    <h1>Wallet: {{WalletMoney}}</h1>
+  </div>
+  <button class="col-sm-4 btn btn-danger" routerLink="RemoveExpenses" style="height: 80px;">
+    <b>
+      <i class="material-icons " style="color: white ">remove</i>
+    </b>
+
+    <b style="font-size: 30px;margin-left: 20px;">Remove</b>
+  </button>
+
+</div>
+
+
+
+<div class="table-wrapper-scroll-y well">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Srno</th>
+        <th scope="col">Date</th>
+        <th scope="col">Category</th>
+        <th scope="col">SubCategory</th>
+        <th scope="col">Deposit</th>
+        <th scope="col">Withdraw</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let i of cash_expenses;let j = index">
+        <th scope="row">{{j+1}}</th>
+        <td>{{i.Date}}</td>
+        <td>{{i.Category}}</td>
+        <td>{{i.SubCategory}}</td>
+        <td>
+          <i class="material-icons" style="color:green" *ngIf="i.Flag=='D'">trending_up</i>
+          {{i.Deposit}}
+        </td>
+        <td>
+          <i class="material-icons" style="color:red" *ngIf="i.Flag=='W'">trending_down</i>
+          {{i.Withdraw}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="text-align: center">
+    <button (click)="download()" class="btn btn-warning" style="height: 80px;width:1400px">
+
+      <i class="material-icons" style="color:white">save_alt</i>
+      <b style="font-size: 30px;margin-left: 20px;">
+        Download Report
+      </b>
+    </button>
+  </div>
+</div>
+
+<div>
+  <button class="col-sm-12 btn btn-success" routerLink="AddCategory" style="height: 80px;">
+
+    <i class="material-icons " style="color: white">add</i>
+    <b style="font-size: 30px;margin-left: 20px;">Add Category</b>
+  </button>
+</div>
+<router-outlet>
+</router-outlet>
