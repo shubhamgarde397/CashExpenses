@@ -2,16 +2,13 @@
 //npm install mongo
 //npm install node
 //npm install express
-var express = require('express');
+var common_data = require('./SERVER/data.json');
+var express = require(common_data.required.express);
 var app = express();
 app.use(express.static(__dirname));
-var mongodb = require('mongodb');
-var mongoClient = mongodb.MongoClient;
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({ encoded: false, extended: true })
-app.use(bodyParser.urlencoded({ extended: true }));
-var cors = require('cors');
+var cors = require(common_data.required.cors)
 app.use(cors());
+<<<<<<< HEAD
 var http = require('http')
 
 
@@ -270,8 +267,14 @@ app.delete('/test', function (req, res) {
             res.send(err);
         });
 });
+=======
+>>>>>>> remotes/origin/service
 
+var Debit = require('./SERVER/Debit');
+var Wallet = require('./SERVER/Wallet');
 
+app.use('./Debit', Debit)
+app.use('/Wallet', Wallet);
 // *********** END OF PUT REQUESTS **************
 
 // app.listen(3000, '10.222.67.66', function () {
@@ -279,14 +282,8 @@ app.delete('/test', function (req, res) {
 //     console.log("NRCM MAIN SERVER : 3000")
 // });
 
+
+
 app.listen(3000, function () {
     console.log("SERVER STARTED");
 });
-
-function getTableName(tablename) {
-    var promise = new Promise((resolve, reject) => {
-        tablename = tablename.replace(/ /g, "_");
-        resolve(tablename);
-    });
-    return promise;
-}

@@ -9,6 +9,7 @@ import { category } from './category';
 import { Consts } from "../../utils/common/constants/const";
 import { FormsModule } from "@angular/forms";
 import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -37,21 +38,20 @@ export class CategoriesComponent implements OnInit {
     this.fetchData();
   }
   fetchData() {
-    this.handleservice.handleData('getcategorydata', 0, 0)
+    this.handleservice.handleData('Wallet/getcategorydata', 0, 0)
       .subscribe((res: Response) => {
         this.categorylist = res.json();
       });
   }
 
   storeCategoryData({ value, valid }: { value: category, valid: boolean }) {
-    console.log(JSON.stringify(value));
     this.submitted = true;
-    this.handleservice.handleData('addcategorydata', 1, 0, value).subscribe((response: Response) => { this.fetchData(); });//old
+    this.handleservice.handleData('Wallet/addcategorydata', 1, 0, value).subscribe((response: Response) => { this.fetchData(); });//old
   }
 
   deleteCategory(id) {
     if (confirm('Are you sure?')) {
-      this.handleservice.handleData('delcategorydata', 2, 1, {}, id)
+      this.handleservice.handleData('Wallet/delcategorydata', 2, 1, {}, id)
         .subscribe((response: Response) => {
           this.fetchData();
         });

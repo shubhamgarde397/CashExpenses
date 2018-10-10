@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiCallsService } from '../../services/handleData/ApiCalls.service';
+import { ApiCallsService } from '../../../services/handleData/ApiCalls.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -18,14 +18,14 @@ export class WalletDispComponent implements OnInit {
   constructor(private handleservice: ApiCallsService) { }
 
   fetchData = function () {
-    this.handleservice.handleData('getCashExpenses', 0, 0)
+    this.handleservice.handleData('Wallet/getCashExpenses', 0, 0)
       .subscribe((res: Response) => {
         this.cash_expenses = res.json();
       });
   };
 
   fetchWallet = function () {
-    this.handleservice.handleData('Wallet', 0, 0)
+    this.handleservice.handleData('Wallet/Wallet', 0, 0)
       .subscribe((res: Response) => {
         this.Wallet = res.json();
         this.WalletMoney = this.Wallet[0].Money;
@@ -42,7 +42,7 @@ export class WalletDispComponent implements OnInit {
   }
 
   download() {
-    this.newAuthor = this.handleservice.handleData('getCashExpenses', 0, 0)
+    this.newAuthor = this.handleservice.handleData('Wallet/getCashExpenses', 0, 0)
       .subscribe((res: Response) => {
         console.log(res.json());
         this.newAuthor = res.json();
