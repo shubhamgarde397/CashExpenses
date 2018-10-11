@@ -42,8 +42,12 @@ export class DebitCardDisplayComponent implements OnInit {
       reason: [this.model.reason, [Validators.required, Validators.pattern('^[A-Za-z]*')]],
       amount: [this.model.amount]
     });
+    this.find();
 
-    this.handleservice.handleData('Debit/hi', 0, 0)
+  }
+
+  find() {
+    this.handleservice.handleData('Card/getCardDetails', 0, 0)
       .subscribe((res: Response) => {
         this.debit_expenses = res.json();
         if (this.debit_expenses) {
@@ -58,7 +62,10 @@ export class DebitCardDisplayComponent implements OnInit {
 
   storeCardDetails({ value, valid }: { value: debitCard, valid: boolean }) {
     this.submitted = true;
-    this.handleservice.handleData('DebitCard/addDebitCardDetails', 1, 0, value).subscribe(x => this.response = x);
+    this.handleservice.handleData('Card/addCardDetails', 1, 0, value)
+      .subscribe((x) => {
+
+      });
   }
   back() {
     this.submitted = !this.submitted;

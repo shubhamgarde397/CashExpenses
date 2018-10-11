@@ -8,10 +8,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var mongoFunctions = require('./mongoFunctions');
 router.use(bodyParser.json());
 
-router.get('/hi', function (req, res) {
-    console.log("hi");
-});
-
 router.get('/getCashExpenses', function (req, res) {
     var receivedData = mongoFunctions.handleData(0, 'Cash', { "Date": 1 })
         .then(function (result) {

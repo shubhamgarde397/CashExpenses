@@ -9,11 +9,19 @@ app.use(express.static(__dirname));
 var cors = require(common_data.required.cors)
 app.use(cors());
 
-var Debit = require('./SERVER/Debit');
+var Card = require('./SERVER/Card');
+// var Category = require('./SERVER/Category');
 var Wallet = require('./SERVER/Wallet');
 
-app.use('./Debit', Debit)
+app.use('/Card', Card);
+// app.use('./Category', Category);
 app.use('/Wallet', Wallet);
+
+
+
+// app.get('/Card/hi', function (req, res) {
+//     res.send("hi");
+// });
 // *********** END OF PUT REQUESTS **************
 
 // app.listen(3000, '10.222.67.66', function () {
