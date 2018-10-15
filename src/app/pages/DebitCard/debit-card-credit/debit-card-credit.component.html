@@ -1,0 +1,129 @@
+<div class="well">
+  <!-- Debit Card -->
+</div>
+<div class="well">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeCardCreditDetails(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/" name="myform" id="myform">
+
+    <!--Date-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Date</div>
+      <div class="col-xs-3">
+        <input type="date" id="date" class="form-control" formControlName="date" placeholder="date">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.date.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Date-->
+
+    <!--Location-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Location</div>
+      <div class="col-xs-3">
+        <input type="text" id="location" class="form-control" formControlName="location" placeholder="Location">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.location.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Location-->
+
+    <!--Reason-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Reason</div>
+      <div class="col-xs-3">
+        <input type="text" id="reason" class="form-control" formControlName="reason" placeholder="Reason">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.reason.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Reason-->
+
+    <!--Amount-->
+    <div class="form-group row">
+      <div class="col-sm-3" style="font-weight: bold">Amount</div>
+      <div class="col-xs-3">
+        <input type="number" id="amount" class="form-control" formControlName="amount" placeholder="Amount">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.amount.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Amount-->
+
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+      <div class="col-xs-1">
+
+        <button type="button" class="btn btn-success" (click)="backClicked()">
+          <i class="material-icons">keyboard_backspace</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="table-wrapper-scroll-y well" *ngIf="dataDebitCardCredit">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Srno</th>
+        <th scope="col">Date</th>
+        <th scope="col">Location</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let i of credit_expenses;let j = index">
+        <th scope="row">{{j+1}}</th>
+        <td>{{i.date}}</td>
+        <td>{{i.location}}</td>
+        <td>{{i.reason}}</td>
+        <td>{{i.amount}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

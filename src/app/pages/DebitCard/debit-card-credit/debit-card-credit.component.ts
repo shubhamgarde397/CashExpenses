@@ -4,16 +4,16 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ApiCallsService } from '../../../services/handleData/ApiCalls.service';
-import { debitCard } from './debitCard';
+import { debitCard } from '../debit-card-display/debitCard';
 import { Consts } from "../../../utils/common/constants/const";
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-debit-card-display',
-  templateUrl: './debit-card-display.component.html',
-  styleUrls: ['./debit-card-display.component.css']
+  selector: 'app-debit-card-credit',
+  templateUrl: './debit-card-credit.component.html',
+  styleUrls: ['./debit-card-credit.component.css']
 })
-export class DebitCardDisplayComponent implements OnInit {
+export class DebitCardCreditComponent implements OnInit {
   private Flag: any;
   private myFormGroup: FormGroup;
   private model: debitCard;//mapped it to a variable
@@ -23,8 +23,8 @@ export class DebitCardDisplayComponent implements OnInit {
   public location: string;
   public reason: string;
   public amount: number;
-  public debit_expenses: string;
-  public dataDebitCard: boolean = false;
+  public credit_expenses: string;
+  public dataDebitCardCredit: boolean = false;
 
 
   constructor(
@@ -47,11 +47,11 @@ export class DebitCardDisplayComponent implements OnInit {
   }
 
   find() {
-    this.handleservice.handleData('Card/getCardDebitDetails', 0, 0)
+    this.handleservice.handleData('Card/getCardCreditDetails', 0, 0)
       .subscribe((res: Response) => {
-        this.debit_expenses = res.json();
-        if (this.debit_expenses) {
-          this.dataDebitCard = true;
+        this.credit_expenses = res.json();
+        if (this.credit_expenses) {
+          this.dataDebitCardCredit = true;
         }
       });
   }
@@ -60,9 +60,9 @@ export class DebitCardDisplayComponent implements OnInit {
     this._location.back();
   }
 
-  storeCardDetails({ value, valid }: { value: debitCard, valid: boolean }) {
+  storeCardCreditDetails({ value, valid }: { value: debitCard, valid: boolean }) {
     this.submitted = true;
-    this.handleservice.handleData('Card/addCardDebitDetails', 1, 0, value)
+    this.handleservice.handleData('Card/addCardCreditDetails', 1, 0, value)
       .subscribe((x) => {
         this.find();
       });

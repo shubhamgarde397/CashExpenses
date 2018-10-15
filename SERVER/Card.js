@@ -9,9 +9,9 @@ var mongoFunctions = require('./mongoFunctions');
 router.use(bodyParser.json());
 
 
-router.post('/addCardDetails', urlencodedParser, function (req, res) {
+router.post('/addCardDebitDetails', urlencodedParser, function (req, res) {
     var body = req.body;
-    var receivedData = mongoFunctions.handleData(1, 'Card', {}, {}, body)
+    var receivedData = mongoFunctions.handleData(1, 'CardDebit', {}, {}, body)
         .then(function (result) {
             res.send(result);
         })
@@ -20,8 +20,29 @@ router.post('/addCardDetails', urlencodedParser, function (req, res) {
         });
 });
 
-router.get('/getCardDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(0, 'Card', { 'Date': 1 })
+router.get('/getCardDebitDetails', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(0, 'CardDebit', { 'Date': 1 })
+        .then(function (result) {
+            res.send(result);
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
+
+router.post('/addCardCreditDetails', urlencodedParser, function (req, res) {
+    var body = req.body;
+    var receivedData = mongoFunctions.handleData(1, 'CardCredit', {}, {}, body)
+        .then(function (result) {
+            res.send(result);
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
+
+router.get('/getCardCreditDetails', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(0, 'CardCredit', { 'Date': 1 })
         .then(function (result) {
             res.send(result);
         })
