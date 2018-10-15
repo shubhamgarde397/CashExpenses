@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-debit-card-handler',
@@ -8,10 +9,10 @@ import { Location } from '@angular/common';
 })
 export class DebitCardHandlerComponent implements OnInit {
 
-  constructor(private location: Location) { }
+  constructor(private router: Router) { }
 
   backClicked() {
-    this.location.back();
+    this.router.navigate(['Navigation']);
   }
   ngOnInit() {
   }
