@@ -1,0 +1,21 @@
+<div class="table-wrapper-scroll-y well">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>product_key</th>
+        <th>side</th>
+        <th>agg_unit</th>
+        <th>execution_key</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let i of data;let j = index">
+        <td>{{i.product_key}}</td>
+        <td>{{i.side}}</td>
+        <td>{{i.agg_unit}}</td>
+        <td>{{i.execution_key}}</td>
+      </tr>
+    </tbody>
+  </table>

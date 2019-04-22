@@ -30,6 +30,7 @@ import { WalletHandlerComponent } from './pages/Wallet/wallet-handler/wallet-han
 import { DebitCardHandlerComponent } from './pages/DebitCard/debit-card-handler/debit-card-handler.component';
 import { DebitCardDisplayComponent } from './pages/DebitCard/debit-card-display/debit-card-display.component';
 import { DebitCardCreditComponent } from './pages/DebitCard/debit-card-credit/debit-card-credit.component';
+import { PythonProgrammingComponent } from './python-programming/python-programming.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { DebitCardCreditComponent } from './pages/DebitCard/debit-card-credit/de
     WalletHandlerComponent,
     DebitCardHandlerComponent,
     DebitCardDisplayComponent,
-    DebitCardCreditComponent
+    DebitCardCreditComponent,
+    PythonProgrammingComponent
   ],
   imports: [
     BrowserModule,
